@@ -116,7 +116,7 @@ pub enum BinaryOperator {
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum UnaryOperator {
     Minus,
-    Exclamation,
+    Not,
 }
 #[derive(Debug, Clone)]
 pub enum Atom {

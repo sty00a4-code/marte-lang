@@ -143,10 +143,21 @@ Binary<Self, Op, Next>: Expression = {
     },
     Next,
 };
-pub Logic = Binary<Logic, LogicOperator, Comparison>;
+Unary<Self, Op, Next>: Expression = {
+    <op:Op> <right:Located<Self>> => Expression::Unary {
+        op: op,
+        right: Box::new(right),
+    },
+    Next,
+};
+pub Logic = Binary<Logic, LogicOperator, Not>;
 LogicOperator: BinaryOperator = {
     "and" => BinaryOperator::And,
     "or" => BinaryOperator::Or,
+};
+pub Not = Unary<Not, NotOperator, Comparison>;
+NotOperator: UnaryOperator = {
+    "not" => UnaryOperator::Not,
 };
 pub Comparison = Binary<Comparison, ComparisonOperator, Arithmetic>;
 ComparisonOperator: BinaryOperator = {
@@ -168,9 +179,13 @@ TermOperator: BinaryOperator = {
     "/" => BinaryOperator::Slash,
     "%" => BinaryOperator::Percent,
 };
-pub Exponent = Binary<Exponent, ExponentOperator, Field>;
+pub Exponent = Binary<Exponent, ExponentOperator, Negative>;
 ExponentOperator: BinaryOperator = {
     "^" => BinaryOperator::Exponent,
+};
+pub Negative = Unary<Negative, NegativeOperator, Field>;
+NegativeOperator: UnaryOperator = {
+    "-" => UnaryOperator::Minus,
 };
 pub Field: Expression = {
     <head:Located<Field>> "." <field:Located<Ident>> => Expression::Field {
