@@ -28,6 +28,10 @@ pub enum ByteCode {
         dst: Register,
         value: LiteralInt,
     },
+    Char {
+        dst: Register,
+        value: u8,
+    },
     Bool {
         dst: Register,
         value: bool,
