@@ -2,6 +2,7 @@ pub type Register = u8;
 pub type Address = u16;
 pub type LiteralInt = i16;
 #[derive(Debug, Clone, Copy)]
+#[repr(u8)]
 pub enum ByteCode {
     NOP,
     Jump {
@@ -31,10 +32,6 @@ pub enum ByteCode {
         dst: Register,
         value: bool,
     },
-    Char {
-        dst: Register,
-        value: char,
-    },
     String {
         dst: Register,
         addr: Address,
@@ -43,6 +40,11 @@ pub enum ByteCode {
         op: BinaryOperation,
         dst: Register,
         left: Register,
+        right: Register,
+    },
+    Unary {
+        op: UnaryOperator,
+        dst: Register,
         right: Register,
     },
 }
@@ -62,4 +64,9 @@ pub enum BinaryOperation {
     Div,
     Mod,
     Pow,
+}
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
+pub enum UnaryOperator {
+    Neg,
+    Not,
 }
