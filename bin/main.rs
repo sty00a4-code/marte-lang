@@ -1,4 +1,5 @@
 extern crate marte_lang;
+extern crate lalrpop_util;
 
 use std::{env, fs, process};
 
